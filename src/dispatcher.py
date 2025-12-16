@@ -1,6 +1,7 @@
 import aiogram
 import aiogram.client.default
 import aiogram.exceptions
+import aiogram.fsm.strategy
 
 import callbacks
 import commands
@@ -41,6 +42,7 @@ class AiogramDispatcher(aiogram.Dispatcher):
         )
 
         super().__init__(
+            fsm_strategy=aiogram.fsm.strategy.FSMStrategy.CHAT,
             name=self.__class__.__name__,
         )
 

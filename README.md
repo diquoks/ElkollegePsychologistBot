@@ -11,7 +11,6 @@
     - [Прочие ссылки](#прочие-ссылки)
 - [Сборка и запуск](#сборка-и-запуск)
     - [Необходимые компоненты](#необходимые-компоненты)
-    - [Первоначальная настройка](#первоначальная-настройка)
     - [config.ini](#configini)
         - [Раздел `Settings`](#раздел-settings)
     - [Docker](#docker)
@@ -39,48 +38,18 @@
 - [Git](https://git-scm.com/downloads)
 - [Python 3.14](https://www.python.org/downloads)
 
-### Первоначальная настройка
-
-##### Клонируйте репозиторий git
-
-```bash
-git clone https://github.com/elkollege/ElkollegePsychologistBot.git
-```
-
-##### Перейдите в корневую директорию
-
-```bash
-cd EmoAid
-```
-
-##### Установите зависимости
-
-```bash
-pip install -r requirements.txt
-```
-
-##### Сгенерируйте файл `config.ini`
-
-```bash
-cd src ; python main.py
-```
-
-##### Заполните `ElkollegePsychologistBot/src/config.ini` [следуя инструкции](#configini)
-
-##### Используйте руководство для [Docker](#docker)
-
 ### config.ini
 
 #### Раздел `Settings`
 
-| Настройка            |  Тип   | Описание                                       |
-|:---------------------|:------:|:-----------------------------------------------|
-| `admins_list`        | `list` | Список ID аккаунтов администраторов в Telegram |
-| `bot_token`          | `str`  | Токен бота в Telegram                          |
-| `chat_id`            | `int`  | ID группы психологов в Telegram                |
-| `file_logging`       | `bool` | Использовать логирование в файлы `.log`        |
-| `psychologists_list` | `list` | Список ID аккаунтов психологов в Telegram      |
-| `skip_updates`       | `bool` | Пропускать ожидающие события при запуске бота  |
+| Настройка               |  Тип   | Описание                                       |
+|:------------------------|:------:|:-----------------------------------------------|
+| `admins_list`           | `list` | Список ID аккаунтов администраторов в Telegram |
+| `bot_token`             | `str`  | Токен бота в Telegram                          |
+| `file_logging`          | `bool` | Использовать логирование в файлы `.log`        |
+| `psychologists_chat_id` | `int`  | ID группы психологов в Telegram                |
+| `psychologists_list`    | `list` | Список ID аккаунтов психологов в Telegram      |
+| `skip_updates`          | `bool` | Пропускать ожидающие события при запуске бота  |
 
 ### Docker
 

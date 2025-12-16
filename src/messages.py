@@ -39,15 +39,15 @@ class MessagesRouter(aiogram.Router):
             message: aiogram.types.Message,
             state: aiogram.fsm.context.FSMContext,
     ) -> None:
-        is_psychologist_chat = message.chat.id == self._config.settings.chat_id
+        is_psychologists_chat = message.chat.id == self._config.settings.psychologists_chat_id
         has_reply_to_forwarded = bool(message.reply_to_message and message.reply_to_message.forward_origin)
 
         self._logger.log_user_interaction(
             user=message.from_user,
-            interaction=f"{message.text} ({is_psychologist_chat=}, {has_reply_to_forwarded=})",
+            interaction=f"{self.message_handler.__name__} ({is_psychologists_chat=}, {has_reply_to_forwarded=})",
         )
 
-        if is_psychologist_chat:
+        if is_psychologists_chat:
             if has_reply_to_forwarded:
                 try:
                     state_data = await state.get_data()
@@ -67,25 +67,24 @@ class MessagesRouter(aiogram.Router):
                     )
         elif message.text:
             forwarded_message = await self._bot.forward_message(
-                chat_id=self._config.settings.chat_id,
+                chat_id=self._config.settings.psychologists_chat_id,
                 from_chat_id=message.chat.id,
                 message_id=message.message_id,
             )
 
-            for psychologist_id in self._config.settings.psychologists_list:
-                psychologist_state = aiogram.fsm.context.FSMContext(
-                    storage=self._storage,
-                    key=aiogram.fsm.storage.base.StorageKey(
-                        chat_id=self._config.settings.chat_id,
-                        user_id=psychologist_id,
-                        bot_id=(await self._bot.me()).id,
-                    ),
-                )
+            psychologist_state = aiogram.fsm.context.FSMContext(
+                storage=self._storage,
+                key=aiogram.fsm.storage.base.StorageKey(
+                    chat_id=self._config.settings.psychologists_chat_id,
+                    user_id=self._config.settings.psychologists_chat_id,
+                    bot_id=(await self._bot.me()).id,
+                ),
+            )
 
-                await psychologist_state.update_data(
-                    data={
-                        str(forwarded_message.message_id): message.from_user.id,
-                    },
-                )
+            await psychologist_state.update_data(
+                data={
+                    str(forwarded_message.message_id): message.from_user.id,
+                },
+            )
 
     # endregion

@@ -99,16 +99,16 @@ class ConfigManager(pyquoks.data.ConfigManager):
         _VALUES = {
             "admins_list": list,
             "bot_token": str,
-            "chat_id": int,
             "file_logging": bool,
+            "psychologists_chat_id": int,
             "psychologists_list": list,
             "skip_updates": bool,
         }
 
         admins_list: list
         bot_token: str
-        chat_id: int
         file_logging: bool
+        psychologists_chat_id: int
         psychologists_list: list
         skip_updates: bool
 
@@ -125,7 +125,13 @@ class ConfigManager(pyquoks.data.ConfigManager):
 
 class LoggerService(pyquoks.data.LoggerService):
     def log_user_interaction(self, user: aiogram.types.User, interaction: str) -> None:
-        user_info = f"@{user.username} ({user.id})" if user.username else user.id
+        user_info = " ".join([
+            " | ".join(i for i in [
+                user.full_name,
+                f"@{user.username}" if user.username else "",
+            ] if i),
+            f"({user.id})",
+        ])
         self.info(f"{user_info} - \"{interaction}\"")
 
 # endregion
